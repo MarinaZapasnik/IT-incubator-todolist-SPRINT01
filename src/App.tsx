@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import {TodolistItem} from './TodolistItem'
+import { v1 } from 'uuid'
 
 export type Task = {
-  id: number
+  id: string
   title: string
   isDone: boolean
 }
@@ -22,14 +23,22 @@ export const App = () => {
   // в данном случае у нас tasks это изначально то что лежит в переменной
   //дальше tasks меняются и засовываются через setTasks(тут новое значение tasks)
 
+
+
+  //установили библиотеку uuid 
+  // в ней есть функция v1 используется для генерации UUID версии 1
+  //
   const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: 'HTML&CSS', isDone: true },
-    { id: 2, title: 'JS', isDone: true },
-    { id: 3, title: 'ReactJS', isDone: false },
-    { id: 4, title: 'Redux', isDone: false },
-    { id: 5, title: 'Typescript', isDone: false },
-    { id: 6, title: 'RTK query', isDone: false },
+    { id: v1(), title: 'HTML&CSS', isDone: true },
+    { id: v1(), title: 'JS', isDone: true },
+    { id: v1(), title: 'ReactJS', isDone: false },
+    { id: v1(), title: 'Redux', isDone: false },
+    { id: v1(), title: 'Typescript', isDone: false },
+    { id: v1(), title: 'RTK query', isDone: false },
   ])
+
+  console.log(tasks);
+  
   
 
   // если  фильтер === 'all' то все таски
@@ -60,19 +69,30 @@ export const App = () => {
     filteredTasks = tasks.filter(task => task.isDone)
   }
   
- const deleteTask = (id: number) => {
+ const deleteTask = (id: string) => {
     const newTasks = tasks.filter( task => task.id !== id) //обязательно создать новую ссылку, новое вместилище, чтобы юз стейт понял, что данные уже другие
     setTasks(newTasks) //передаем в юзстейт отфильтрованные данные
   }
 
-  
+  const createTask = (title: string) => {
+    
+    const newTask: Task = {id: v1() , title: title, isDone: false}
+    const nextState: Task[] = [...tasks, newTask]
+    
+    setTasks(nextState)
+
+
+    ///это все можно сократить вот так:
+    ///!!!   setTasks([...tasks, {id: v1() , title: title, isDone: false}])   !!!!
+  }
 
   return (
       <div className="app">
         <TodolistItem title="What to learn" 
                       tasks={filteredTasks} 
                       deleteTask={deleteTask}
-                      changeFilter={changeFilter}/>
+                      changeFilter={changeFilter}
+                      createTask={createTask}/>
       </div>
   )
 }

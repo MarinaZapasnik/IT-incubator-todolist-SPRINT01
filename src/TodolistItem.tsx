@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import type {FilterValues, Task} from './App'
 import {Button} from './Button'
 
@@ -5,21 +6,41 @@ import {Button} from './Button'
 type Props = {
   title: string
   tasks: Task[]
-  deleteTask: (id: number) => void
+  deleteTask: (id: string) => void
   changeFilter: (filter: FilterValues) => void
+  createTask: (title: string) => void
  
 }
 
-export const TodolistItem = ({title, tasks, deleteTask, changeFilter}: Props) => {
+export const TodolistItem = ({
+              title, 
+              tasks, 
+              deleteTask, 
+              changeFilter, 
+              createTask
+            }: Props) => {
 
- 
+  const taskInputRef = useRef<HTMLInputElement>(null)
+
+  //useRef<HTMLInputElement> указывает, что эта ссылка будет относиться к элементу типа HTMLInputElement
+  //Начальное значение — null. 
+  //Это важно, потому что на момент первой отрисовки компонента элемент может ещё не существовать
 
   return (
       <div>
         <h3>{title}</h3>
         <div>
-          <input/>
-          <Button title={'+'} />
+          <input ref={taskInputRef}/>
+          <Button title={'+'} onClick={() => {
+            
+            if (taskInputRef.current) {
+              createTask(taskInputRef.current.value)
+              taskInputRef.current.value = ''
+            }
+          }}
+          />
+
+
         </div>
         {tasks.length === 0 ? (
             <p>Тасок нет</p>
