@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import type {FilterValues, Task} from './App'
 import {Button} from './Button'
 
@@ -9,6 +9,7 @@ type Props = {
   deleteTask: (id: string) => void
   changeFilter: (filter: FilterValues) => void
   createTask: (title: string) => void
+  
  
 }
 
@@ -17,10 +18,18 @@ export const TodolistItem = ({
               tasks, 
               deleteTask, 
               changeFilter, 
-              createTask
+              createTask,
+              
             }: Props) => {
 
-  const taskInputRef = useRef<HTMLInputElement>(null)
+  //const taskInputRef = useRef<HTMLInputElement>(null)
+
+  const [taskTitle, setTaskTitle] = useState('')
+
+  const createTaskHandler = () => createTask(taskTitle)
+
+  const isAddTaskDisabled = !taskTitle || taskTitle.length > 10
+  
 
   //useRef<HTMLInputElement> указывает, что эта ссылка будет относиться к элементу типа HTMLInputElement
   //Начальное значение — null. 
@@ -30,15 +39,26 @@ export const TodolistItem = ({
       <div>
         <h3>{title}</h3>
         <div>
-          <input ref={taskInputRef}/>
-          <Button title={'+'} onClick={() => {
+          <input value={taskTitle} placeholder='Введите новую заметку'
+            onChange={(e) => setTaskTitle(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !isAddTaskDisabled) {
+               createTaskHandler()
+              }
+              
+            }}/>
+          <Button 
+              disabled={isAddTaskDisabled}
+              title={'+'} 
+              onClick={() => {
+                createTaskHandler()
             
-            if (taskInputRef.current) {
-              createTask(taskInputRef.current.value)
-              taskInputRef.current.value = ''
-            }
           }}
           />
+
+          
+          {taskTitle && <div>Max title length is 10 simbols</div>}
+          {taskTitle.length > 10 && <div style={{color: 'red'}}>title length is too long</div>}
 
 
         </div>
