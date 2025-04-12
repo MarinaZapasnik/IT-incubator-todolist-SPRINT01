@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type {FilterValues, Task} from './App'
 import {Button} from './Button'
 
@@ -28,7 +28,7 @@ export const TodolistItem = ({
 
   const createTaskHandler = () => createTask(taskTitle)
 
-  const isAddTaskDisabled = !taskTitle || taskTitle.length > 10
+  const isAddTaskDisabled = !taskTitle || taskTitle.length > 20
   
 
   //useRef<HTMLInputElement> указывает, что эта ссылка будет относиться к элементу типа HTMLInputElement
@@ -57,8 +57,8 @@ export const TodolistItem = ({
           />
 
           
-          {taskTitle && <div>Max title length is 10 simbols</div>}
-          {taskTitle.length > 10 && <div style={{color: 'red'}}>title length is too long</div>}
+          {taskTitle && <div>Max title length is 20 simbols</div>}
+          {taskTitle.length > 20 && <div style={{color: 'red'}}>title length is too long</div>}
 
 
         </div>
