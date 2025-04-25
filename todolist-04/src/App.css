@@ -1,0 +1,48 @@
+.app {
+  padding: 30px;
+  display: flex;
+}
+
+.app > div {
+  margin-right: 50px;
+}
+
+.task {
+  color: rgb(107, 104, 104);
+ 
+}
+
+.task:hover {
+  color: rgb(241, 10, 10);
+}
+
+.taskDone {
+  color: rgb(31, 226, 96);
+}
+
+.filterBtn {
+  background-color: rgb(235, 69, 83);
+  color:white;
+  border: solid 2px rgb(235, 69, 83);
+  border-radius: 5px;
+}
+
+.filterBtn:hover {
+  background-color: rgb(235, 9, 28);
+  border: solid 2px rgb(235, 9, 28);
+  border-radius: 5px;
+}
+
+.filterBtnActive {
+  background-color: rgb(62, 239, 53);
+  color:white;
+  border: solid 2px rgb(62, 239, 53);
+  border-radius: 5px;
+ 
+}
+
+.taskInputError {
+  border: 2px solid red;
+  outline: none;
+  background-color: rgba(205, 92, 92, 0.411);
+}
