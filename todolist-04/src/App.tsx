@@ -18,6 +18,7 @@ export const App = () => {
     { id: v1(), title: 'HTML&CSS', isDone: true },
     { id: v1(), title: 'JS', isDone: true },
     { id: v1(), title: 'ReactJS', isDone: false },
+    { id: v1(), title: 'TS', isDone: false }
   ])
 
   const deleteTask = (taskId: string) => {
